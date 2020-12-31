@@ -17,6 +17,9 @@ class ValidationTest(models.Manager):
         EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
         if not EMAIL_REGEX.match(postData['email']):
             errors['email'] = "Invalid email address!"
+        emaildupcheck = User.objects.filter(email=postData['email'])
+        if emaildupcheck == postData['email']:
+            errors['email'] = "email address already exists. Did you forget your password?"
         # Magic to make the date comparison work.
         dateentered = postData['birthdate']
         birthdate = datetime.strptime(dateentered, "%Y-%m-%d")
