@@ -30,11 +30,14 @@ def register(request):
         return redirect('home')
 
 def success(request):
-    if request.session['userid']:
-        context = {
-            "userinfo" : User.objects.get(id=request.session['userid'])
-        }
-        return render(request, 'html/success.html', context)
+    if request.method == 'POST':
+        if request.session['userid']:
+            context = {
+                "userinfo" : User.objects.get(id = request.session['userid'])
+            }
+            return render(request, 'html/success.html', context)
+    else:
+        return redirect('home')
 
 def logout(request):
     request.session.flush()
@@ -42,7 +45,7 @@ def logout(request):
 
 def login(request):
     if request.method == 'POST':
-        user = User.objects.get(email = request.POST['email_login'])
+        user = User.objects.filter(email = request.POST['email_login'])
         print(user)
         if user:
             loggedin_user = user[0]
@@ -50,6 +53,7 @@ def login(request):
             if bcrypt.checkpw(request.POST['password_login'].encode(), loggedin_user.password.encode()):
                 print("PASSWORD VALIDATED")
                 request.session['userid'] = loggedin_user.id
+                print(request.session['userid'])
                 return redirect('success')
     return redirect('home')
 
