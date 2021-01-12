@@ -1,6 +1,9 @@
 from django.db import models
 import re, datetime
 from datetime import date, datetime
+from django.db.models.deletion import CASCADE
+
+from django.db.models.fields import related
 
 # Thanks, StackOverflow!
 def calculate_age(born):
@@ -42,3 +45,28 @@ class User(models.Model):
     password = models.CharField(max_length=255)
     
     objects = ValidationTest()
+
+class Messages(models.Model):
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(
+        User,
+        related_name = 'messages',
+        on_delete = CASCADE,
+    )
+
+class Comments(models.Model):
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_created=True)
+    user = models.ForeignKey(
+        User,
+        related_name = 'user_comments',
+        on_delete = CASCADE,
+    )
+    message = models.ForeignKey(
+        Messages,
+        related_name = 'msg_comment',
+        on_delete = CASCADE,
+    )

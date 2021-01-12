@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'Login_And_Registration',
-    'Wall',
+    'WallApp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
