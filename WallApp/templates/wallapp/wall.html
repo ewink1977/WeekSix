@@ -1,4 +1,57 @@
 {% extends "wallapp/base.html" %}
 {% block wall %}
-
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="message">Post A Message!</label>
+        <textarea class="form-control" name="message" id="message" rows="5"></textarea>
+    </div>
+    <div class="text-right mb-3">
+        <button type="submit" class="btn btn-primary">Post Message</button>
+    </div>
+</form>
+<div class="row">
+    <div class="col-auto ml-5">
+        <p class="font-weight-bold">MESSAGE AUTHOR - DATE POSTED</p>
+    </div>
+</div>
+<div class="row align-items-end">
+    <div class="col-1"></div>
+    <div class="col-11">
+        <p class="text-right">A message placeholder. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime, voluptatem. Doloribus dolore praesentium aspernatur possimus voluptates at laudantium? Corporis distinctio ipsum eligendi dolore sit veritatis magnam, consequatur repellat eos doloribus.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-auto ml-5 pl-5">
+        <p class="font-weight-bold">COMMENT AUTHOR - DATE POSTED</p>
+    </div>
+</div>
+<div class="row align-items-end">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <p class="text-right">A comment placeholder. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime, voluptatem. Doloribus dolore praesentium aspernatur possimus voluptates at laudantium? Corporis distinctio ipsum eligendi dolore sit veritatis magnam, consequatur repellat eos doloribus.</p>
+    </div>
+    <div class="col-1 align-self-center">
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">DELETE</button>
+        </form>
+    </div>
+</div>
+<div class="row align-items-end">
+    <div class="col-2"></div>
+    <div class="col-10">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="comment">Post A Comment!</label>
+                <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
+            </div>
+            <div class="text-right mb-3">
+                <button type="submit" class="btn btn-success">Post Message</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock wall %}
+

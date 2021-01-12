@@ -1,3 +1,4 @@
+from WallApp.views import wall_home
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
@@ -13,7 +14,7 @@ def register(request):
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value, extra_tags='danger')
-            return redirect('home')
+            return redirect('login:home')
         prehash = request.POST['password']
         hash_n_salt = bcrypt.hashpw(prehash.encode(), bcrypt.gensalt(17)).decode()
         newuser = User.objects.create(
@@ -25,9 +26,9 @@ def register(request):
         )
         request.session['userid'] = newuser.id
         messages.success(request, f"User { request.POST['email'] } has been created successfully!")
-        return redirect('success')
+        return redirect('login:success')
     else:
-        return redirect('home')
+        return redirect('login:home')
 
 def success(request):
     if request.method == 'POST':
@@ -37,24 +38,30 @@ def success(request):
             }
             return render(request, 'html/success.html', context)
     else:
-        return redirect('home')
+        return redirect('login:home')
 
 def logout(request):
     request.session.flush()
-    return redirect('home')
+    request.session['loggedin'] = False
+    return redirect('login:home')
 
 def login(request):
     if request.method == 'POST':
         user = User.objects.filter(email = request.POST['email_login'])
-        print(user)
         if user:
             loggedin_user = user[0]
             print("USER LOCATED")
             if bcrypt.checkpw(request.POST['password_login'].encode(), loggedin_user.password.encode()):
                 print("PASSWORD VALIDATED")
                 request.session['userid'] = loggedin_user.id
+                request.session['loggedin'] = True
                 print(request.session['userid'])
-                return redirect('success')
-    return redirect('home')
+                messages.success(request, f"User {loggedin_user.first_name} has logged in!")
+                context = {
+                    'loggedin_user': loggedin_user
+                }
+                return render(request, 'wallapp/wall.html', context)
+    else:
+        return redirect('login:home')
 
 

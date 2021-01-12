@@ -14,7 +14,11 @@
     {% endif %}
 </head>
 <body>
-    <div class="container rounded-lg shadow bg-gradient-light text-dark pt-5">
+    <div class="container rounded-lg shadow bg-gradient-light text-dark pt-1 pb-5">
+        <nav class="navbar navbar-dark bg-dark justify-content-between mb-5">
+            <a class="navbar-brand" href="#">Coding Dojo Wall</a>
+            <p class="text-light">Welcome {{loggedin_user.first_name}}! | <a href="{% url 'login:logout' %}">Log Out</a></p>
+        </nav>
         <div class="row align-items-start justify-content-start mb-2">
             <div class="col align-self-start">
                 {% if messages %}

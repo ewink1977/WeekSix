@@ -10,7 +10,7 @@
 </div>
 <div class="row align-items-start justify-content-around pr-5 pl-5">
     <div class="col-6 align-self-start">
-        <form action="{% url 'register' %}" method="POST">
+        <form action="{% url 'login:register' %}" method="POST">
             {% csrf_token %}
             <div class="form-group row">
                 <label for="firstname" class="col-3 col-form-label">First Name</label>
@@ -54,7 +54,7 @@
         </form>
     </div>
     <div class="col-6 align-self-start">
-        <form action="{% url 'login' %}" method="POST">
+        <form action="{% url 'login:login' %}" method="POST">
             {% csrf_token %}
             <div class="form-group row">
                 <label for="email_login" class="col-3 col-form-label">email</label>
