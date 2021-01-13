@@ -56,17 +56,27 @@ class Messages(models.Model):
         on_delete = CASCADE,
     )
 
+class WallPost(models.Model):
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(
+        User,
+        related_name = 'usr_post',
+        on_delete = CASCADE,
+    )
+
 class Comments(models.Model):
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_created=True)
+    updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(
         User,
         related_name = 'user_comments',
         on_delete = CASCADE,
     )
     message = models.ForeignKey(
-        Messages,
+        WallPost,
         related_name = 'msg_comment',
         on_delete = CASCADE,
     )

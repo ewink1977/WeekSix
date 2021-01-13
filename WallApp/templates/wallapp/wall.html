@@ -1,6 +1,6 @@
 {% extends "wallapp/base.html" %}
 {% block wall %}
-<form action="" method="POST">
+<form action="{% url 'wall:add_message' %}" method="POST">
     {% csrf_token %}
     <div class="form-group">
         <label for="message">Post A Message!</label>
@@ -10,26 +10,31 @@
         <button type="submit" class="btn btn-primary">Post Message</button>
     </div>
 </form>
+{% if wallposts %}
+{% for post in wallposts %}
 <div class="row">
     <div class="col-auto ml-5">
-        <p class="font-weight-bold">MESSAGE AUTHOR - DATE POSTED</p>
+        <p class="font-weight-bold">{{ post.user.first_name }} {{ post.user.last_name }} - {{ post.created_at|date:"F j, Y" }}</p>
     </div>
 </div>
 <div class="row align-items-end">
     <div class="col-1"></div>
     <div class="col-11">
-        <p class="text-right">A message placeholder. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime, voluptatem. Doloribus dolore praesentium aspernatur possimus voluptates at laudantium? Corporis distinctio ipsum eligendi dolore sit veritatis magnam, consequatur repellat eos doloribus.</p>
+        <p class="text-right">{{ post.message }}</p>
     </div>
 </div>
+{% if comments %}
+{% if comments.post.id == post.id %}
+{% for comment in comments %}
 <div class="row">
     <div class="col-auto ml-5 pl-5">
-        <p class="font-weight-bold">COMMENT AUTHOR - DATE POSTED</p>
+        <p class="font-weight-bold">{{ comment.user.first_name }} {{ comment.user.last_name }} - {{ comment.created_at|date:"F j, Y" }}</p>
     </div>
 </div>
 <div class="row align-items-end">
     <div class="col-1"></div>
     <div class="col-10">
-        <p class="text-right">A comment placeholder. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime, voluptatem. Doloribus dolore praesentium aspernatur possimus voluptates at laudantium? Corporis distinctio ipsum eligendi dolore sit veritatis magnam, consequatur repellat eos doloribus.</p>
+        <p class="text-right">{{ comment.comment }}</p>
     </div>
     <div class="col-1 align-self-center">
         <form action="" method="post">
@@ -38,6 +43,10 @@
         </form>
     </div>
 </div>
+<!-- End Comment Block. -->
+{% endfor %}
+{% endif %}
+{% endif %}
 <div class="row align-items-end">
     <div class="col-2"></div>
     <div class="col-10">
@@ -53,5 +62,9 @@
         </form>
     </div>
 </div>
+<!-- End Message Block. -->
+{% endfor %}
+{% endif %}
+<!-- End Page. -->
 {% endblock wall %}
 
