@@ -46,16 +46,6 @@ class User(models.Model):
     
     objects = ValidationTest()
 
-class Messages(models.Model):
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(
-        User,
-        related_name = 'messages',
-        on_delete = CASCADE,
-    )
-
 class WallPost(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
