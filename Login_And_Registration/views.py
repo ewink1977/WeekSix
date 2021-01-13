@@ -60,8 +60,6 @@ def login(request):
                 context = {
                     'loggedin_user': loggedin_user
                 }
-                return render(request, 'wallapp/wall.html', context)
+                return redirect('wall:wall_home')
     else:
         return redirect('login:home')
-
-

@@ -17,8 +17,8 @@
     <div class="container rounded-lg shadow bg-gradient-light text-dark pt-1 pb-5">
         <nav class="navbar navbar-dark bg-dark justify-content-between mb-5">
             <a class="navbar-brand" href="#">Coding Dojo Wall</a>
-            {% if loggedin_user %}
-            <p class="text-light">Welcome {{loggedin_user.first_name}}! | <a href="{% url 'login:logout' %}">Log Out</a></p>
+            {% if loggedinuser %}
+            <p class="text-light">Welcome {{ loggedinuser.first_name }}! | <a href="{% url 'login:logout' %}">Log Out</a></p>
             {% else %}
             <p class="text-light">Please, log in! | <a href="{% url 'login:login' %}">Log In</a></p>
             {% endif %}
